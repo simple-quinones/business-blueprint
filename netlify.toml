@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "18"
 
+[functions]
+  node_bundler = "esbuild"
+
+[functions."blueprint"]
+  timeout = 26
+
 [[redirects]]
   from = "/api/blueprint"
   to = "/.netlify/functions/blueprint"
