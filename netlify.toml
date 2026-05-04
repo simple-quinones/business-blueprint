@@ -1,0 +1,8 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/blueprint"
+  to = "/.netlify/functions/blueprint"
+  status = 200
