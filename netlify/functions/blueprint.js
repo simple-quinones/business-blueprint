@@ -3,7 +3,7 @@ const https = require("https");
 function callAnthropic(apiKey, prompt, maxTokens) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
-      model: "claude-3-5-sonnet-20241022",
+      model: "claude-sonnet-4-6",
       max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     });
@@ -39,6 +39,7 @@ function callAnthropic(apiKey, prompt, maxTokens) {
 }
 
 exports.handler = async function (event) {
+  console.log("Blueprint function invoked:", event.httpMethod, new Date().toISOString());
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: JSON.stringify({ error: "Method not allowed" }) };
   }
@@ -153,6 +154,7 @@ CRITICAL RULES:
     console.error("Function error:", err.message);
     return {
       statusCode: 500,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ error: "Internal server error", detail: err.message }),
     };
   }
