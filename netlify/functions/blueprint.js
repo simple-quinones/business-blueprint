@@ -1,9 +1,9 @@
 const https = require("https");
 
-function callAnthropic(apiKey, prompt, maxTokens) {
+function callAnthropic(apiKey, prompt, maxTokens, model) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
-      model: "claude-sonnet-4-6",
+      model: model,
       max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     });
@@ -89,62 +89,47 @@ CRITICAL: Focus area labels must name real specific marketing struggles. Bad: Lo
 
   } else if (type === "blueprint") {
     const { bizType, bizId, description, focusArea, pillar, situation, mindset, fiveK, state, revMid } = data;
-    prompt = `Build a complete Local Business Marketing Blueprint. Be highly specific. No generic advice. Business-type-native recommendations only.
+    prompt = `Create a Local Business Marketing Blueprint. Be specific. No generic advice.
 
-BUSINESS PROFILE:
-Business type: ${bizType}
-Business identity: ${bizId}
-Business description: ${description}
-Biggest marketing gap: ${focusArea}
-Primary pillar needed: ${pillar}
-Current situation: ${situation || "Not specified"}
-Marketing mindset: ${mindset}
-Investment readiness: ${fiveK}
-State: ${state}
-Monthly revenue: ~$${revMid}
+PROFILE:
+Type: ${bizType} | Identity: ${bizId} | Description: ${description}
+Gap: ${focusArea} | Pillar: ${pillar} | State: ${state} | Revenue: $${revMid}/mo
+Situation: ${situation || "N/A"} | Mindset: ${mindset} | Ready: ${fiveK}
 
-CRITICAL: GoHighLevel (GHL) should be prominently recommended as the core platform for CRM, website, lead capture, and follow-up automation. Frame it as the system that ties everything together.
+GoHighLevel (GHL) is the recommended core platform. Always list it first in techStack.
 
-Return ONLY valid JSON (no markdown, no backticks):
+Return ONLY valid JSON:
 {
-  "systemTitle":"Specific marketing system name for this business",
-  "systemType":"What it is e.g. Local SEO plus Google Ads plus GHL Funnel System",
-  "tagline":"One sentence: who it serves, what it delivers, timeframe",
-  "idealCustomer":"Two sentences: exactly who they should be targeting and why",
-  "primaryFocus":"One sentence: the number 1 thing to prioritize first and why for this specific business",
-  "techStack":["GoHighLevel one sentence on exactly how it helps this business type","Tool 2 specific to their pillar","Tool 3 specific to their pillar"],
-  "quickWin":{
-    "title":"Your 7-Day Quick Win",
-    "description":"One sentence: what to do this week for an immediate result specific to their business type",
-    "actions":["Specific action 1 max 25 words","Action 2 max 25 words","Action 3 max 25 words"]
-  },
-  "simplest":"One sentence: the single simplest first step they can take tomorrow morning",
-  "weeks":[
-    {"tag":"Week 1","title":"Foundation","tasks":["Action verb plus what plus how. Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]},
-    {"tag":"Week 2","title":"Launch","tasks":["Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]},
-    {"tag":"Week 3","title":"Optimize","tasks":["Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]},
-    {"tag":"Week 4","title":"Scale","tasks":["Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]}
-  ],
-  "milestone":"By day 30 you will have [specific concrete milestone for this business type]",
-  "seoStrategy":"Two sentences: specific local SEO approach for their business type and state",
-  "adsStrategy":"Two sentences: specific paid ads recommendation based on their primary pillar and business type",
-  "websiteTip":"One sentence: most impactful website change for their business type that converts visitors to calls",
-  "businessTip":"One sentence: insider marketing insight specific to their business type that most owners miss"
+"systemTitle":"Specific marketing system name",
+"systemType":"Short label e.g. Local SEO + Google Ads + GHL",
+"tagline":"One sentence: who it serves, what it delivers, timeframe",
+"idealCustomer":"Two sentences on exactly who to target and why",
+"primaryFocus":"One sentence: #1 priority and why",
+"techStack":["GoHighLevel + one sentence on how it helps","Tool 2 + one sentence","Tool 3 + one sentence"],
+"quickWin":{"title":"Your 7-Day Quick Win","description":"One sentence on this week's action","actions":["Action 1 max 25 words","Action 2 max 25 words","Action 3 max 25 words"]},
+"simplest":"One sentence: simplest first step tomorrow morning",
+"weeks":[
+{"tag":"Week 1","title":"Foundation","tasks":["Max 18 words","Max 18 words","Max 18 words","Max 18 words"]},
+{"tag":"Week 2","title":"Launch","tasks":["Max 18 words","Max 18 words","Max 18 words","Max 18 words"]},
+{"tag":"Week 3","title":"Optimize","tasks":["Max 18 words","Max 18 words","Max 18 words","Max 18 words"]},
+{"tag":"Week 4","title":"Scale","tasks":["Max 18 words","Max 18 words","Max 18 words","Max 18 words"]}
+],
+"milestone":"By day 30 you will have [specific milestone]",
+"seoStrategy":"Two sentences on local SEO approach for this business + state",
+"adsStrategy":"Two sentences on paid ads recommendation for this pillar + business",
+"websiteTip":"One sentence: highest-impact website change",
+"businessTip":"One sentence: insider tip specific to this business type"
 }
 
-CRITICAL RULES:
-- Every tasks string: MAXIMUM 20 words. Action verb plus what plus how. No paragraphs.
-- Every quickWin actions string: MAXIMUM 25 words.
-- simplest, tagline, primaryFocus, milestone, seoStrategy, adsStrategy, websiteTip, businessTip: one sentence each.
-- Violating word limits causes a JSON parse error in the app.`;
-    maxTokens = 4096;
+HARD RULES: Every tasks string MAX 18 words. Every quickWin action MAX 25 words. Be tight. Be specific.`;
+    maxTokens = 2500;
 
   } else {
     return { statusCode: 400, body: JSON.stringify({ error: `Unknown type: ${type}` }) };
   }
 
   try {
-    const result = await callAnthropic(apiKey, prompt, maxTokens);
+    const result = await callAnthropic(apiKey, prompt, maxTokens, "claude-sonnet-4-6");
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
