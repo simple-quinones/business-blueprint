@@ -28,7 +28,6 @@ exports.handler = async function (event) {
   let prompt = "";
   let maxTokens = 1200;
 
-  // ── CALL 1: Business Identity + Focus Areas ──────────────────────────────
   if (type === "niche") {
     const { bizType, description } = data;
     prompt = `A local/small business owner in the "${bizType}" category described their business as: "${description}"
@@ -38,19 +37,20 @@ Return ONLY valid JSON (no markdown, no backticks):
   "title":"3-5 word business type descriptor (e.g. Family-Owned HVAC Company)",
   "identity":"You serve [specific customer type] who need [specific service/outcome] in [their market]. (1 sentence starting with You serve)",
   "focusAreas":[
-    {"label":"3-6 words","description":"One sentence on marketing opportunity","top":true},
-    {"label":"3-6 words","description":"One sentence","top":true},
-    {"label":"3-6 words","description":"One sentence","top":true},
-    {"label":"3-6 words","description":"One sentence","top":false},
-    {"label":"3-6 words","description":"One sentence","top":false},
-    {"label":"3-6 words","description":"One sentence","top":false},
-    {"label":"3-6 words","description":"One sentence","top":false}
+    {"label":"3-6 words naming a specific marketing struggle","description":"One sentence: what this problem costs them AND what fixing it could produce. Example format: 'No Google rankings means competitors take your leads — ranking for 5 local keywords could add 20+ inbound calls per month.'","top":true},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":true},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":true},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false}
   ],
-  "rec":"1 sentence: which focus areas have the biggest marketing ROI for this business type and why"
-}`;
+  "rec":"1 sentence: which 1-2 focus areas would move the needle fastest for this specific business and why"
+}
+
+CRITICAL: Focus area labels must be REAL specific marketing struggles, not vague categories. Bad examples: 'Local SEO Presence', 'Social Media Strategy'. Good examples: 'No Google Rankings Losing Leads', 'Website Visitors Not Converting', 'Zero Follow-Up After First Contact'. Every description must name the pain AND the potential outcome if fixed.`;
     maxTokens = 1200;
 
-  // ── CALL 2: Full Marketing Blueprint ─────────────────────────────────────
   } else if (type === "blueprint") {
     const { bizType, bizId, description, focusArea, pillar, situation, mindset, fiveK, state, revMid } = data;
     prompt = `Build a complete Local Business Marketing Blueprint. Be highly specific. No generic advice. Business-type-native recommendations only.
@@ -72,11 +72,11 @@ CRITICAL: GoHighLevel (GHL) should be prominently recommended as the core platfo
 Return ONLY valid JSON (no markdown, no backticks):
 {
   "systemTitle":"Specific marketing system name for this business",
-  "systemType":"What it is — e.g. 'Local SEO + Google Ads + GHL Funnel System'",
+  "systemType":"What it is e.g. Local SEO plus Google Ads plus GHL Funnel System",
   "tagline":"One sentence: who it serves, what it delivers, timeframe",
   "idealCustomer":"Two sentences: exactly who they should be targeting and why",
-  "primaryFocus":"One sentence: the #1 thing to prioritize first and why for this specific business",
-  "techStack":["GoHighLevel — one sentence on exactly how it helps this business type","Tool 2 specific to their pillar","Tool 3 specific to their pillar"],
+  "primaryFocus":"One sentence: the number 1 thing to prioritize first and why for this specific business",
+  "techStack":["GoHighLevel one sentence on exactly how it helps this business type","Tool 2 specific to their pillar","Tool 3 specific to their pillar"],
   "quickWin":{
     "title":"Your 7-Day Quick Win",
     "description":"One sentence: what to do this week for an immediate result specific to their business type",
@@ -84,7 +84,7 @@ Return ONLY valid JSON (no markdown, no backticks):
   },
   "simplest":"One sentence: the single simplest first step they can take tomorrow morning",
   "weeks":[
-    {"tag":"Week 1","title":"Foundation","tasks":["Action verb + what + how. Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]},
+    {"tag":"Week 1","title":"Foundation","tasks":["Action verb plus what plus how. Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]},
     {"tag":"Week 2","title":"Launch","tasks":["Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]},
     {"tag":"Week 3","title":"Optimize","tasks":["Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]},
     {"tag":"Week 4","title":"Scale","tasks":["Max 20 words.","Max 20 words.","Max 20 words.","Max 20 words."]}
@@ -97,9 +97,9 @@ Return ONLY valid JSON (no markdown, no backticks):
 }
 
 CRITICAL RULES:
-- Every tasks[] string: MAXIMUM 20 words. Action verb + what + how. No paragraphs.
-- Every quickWin actions[] string: MAXIMUM 25 words.
-- simplest, tagline, primaryFocus, milestone, seoStrategy x2, adsStrategy x2, websiteTip, businessTip: short and specific.
+- Every tasks string: MAXIMUM 20 words. Action verb plus what plus how. No paragraphs.
+- Every quickWin actions string: MAXIMUM 25 words.
+- simplest, tagline, primaryFocus, milestone, seoStrategy, adsStrategy, websiteTip, businessTip: short and specific, one sentence each.
 - Violating word limits causes a JSON parse error in the app.`;
     maxTokens = 4096;
 
@@ -107,7 +107,6 @@ CRITICAL RULES:
     return { statusCode: 400, body: JSON.stringify({ error: `Unknown type: ${type}` }) };
   }
 
-  // ── Call Anthropic ────────────────────────────────────────────────────────
   try {
     const response = await fetch(ANTHROPIC_API, {
       method: "POST",
