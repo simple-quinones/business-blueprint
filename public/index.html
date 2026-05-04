@@ -1,1 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Blueprint — Simple to Scale</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{--bg:#172D21;--card:#1C3628;--el:#213E2F;--inp:#1A3326;--cu:#C4824A;--cud:rgba(196,130,74,.6);--cub:rgba(196,130,74,.07);--cubr:rgba(196,130,74,.4);--cr:#F0E8DC;--crd:rgba(240,232,220,.62);--crm:rgba(240,232,220,.32);--b:rgba(240,232,220,.09);--bm:rgba(240,232,220,.16)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{background:var(--bg);color:var(--cr);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background:linear-gradient(rgba(196,130,74,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(196,130,74,.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:18px 36px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(23,45,33,.97) 60%,transparent)}
+.nb{font-family:'Instrument Serif',serif;font-size:17px;letter-spacing:.02em}
+.nt{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cu)}
+#prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:600;display:none}
+#pf{height:100%;background:var(--cu);transition:width .5s ease;width:0}
+.sc{position:relative;z-index:1;min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:100px 24px 60px}
+.sc.on{display:flex;animation:fu .4s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.psc{text-align:center;max-width:540px}
+.ptag{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--cu);margin-bottom:18px;display:block}
+.card{background:var(--card);border:1px solid var(--b);border-radius:20px;padding:44px;width:100%;max-width:640px}
+.lbl{display:block;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--cu);margin-bottom:14px}
+.sct{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cu);margin-bottom:18px}
+h1{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,52px);font-weight:400;line-height:1.12}
+h1 em,h2 em{font-style:italic;color:var(--cud)}
+h2{font-family:'Instrument Serif',serif;font-size:clamp(24px,4vw,38px);font-weight:400;line-height:1.2}
+p{color:var(--crd);line-height:1.66;font-size:15px}
+.fn{font-size:12px;color:var(--crm);font-style:italic}
+.btn{width:100%;padding:18px 28px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;border:none;letter-spacing:.01em}
+.bp{background:var(--cr);color:var(--bg)}.bp:hover:not(:disabled){opacity:.9;transform:translateY(-1px)}.bp:disabled{opacity:.32;cursor:not-allowed}
+.bg2{background:transparent;color:var(--crd);border:1px solid var(--bm)}.bg2:hover{border-color:var(--cubr);color:var(--cr)}
+.fld{width:100%;padding:15px 18px;background:var(--inp);border:1px solid var(--b);border-radius:12px;color:var(--cr);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;transition:border-color .2s;outline:none}
+.fld::placeholder{color:var(--crm)}.fld:focus{border-color:var(--cubr)}
+textarea.fld{resize:none;min-height:110px;line-height:1.6}
+select.fld{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(240,232,220,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+select.fld option{background:var(--bg);color:var(--cr)}
+.chs{display:flex;flex-direction:column;gap:9px}
+.ch{padding:14px 18px;background:var(--inp);border:1px solid var(--b);border-radius:12px;color:var(--cr);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;font-family:'DM Sans',sans-serif;text-align:left;width:100%}
+.ch:hover{border-color:var(--cubr);background:var(--el)}.ch.sel{border-color:var(--cu);background:var(--cub)}.ch.sel .cn{background:var(--cu);color:var(--bg)}
+.cn{width:27px;height:27px;border-radius:8px;background:var(--el);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--cu);font-weight:500;flex-shrink:0}
+.ct{font-size:14px;font-weight:400}.cs{font-size:12px;color:var(--crm);margin-top:2px}
+.cpk{margin-left:auto;font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--cu);background:rgba(196,130,74,.14);padding:3px 8px;border-radius:4px;flex-shrink:0}
+.ch.qual-yes{border-color:var(--cu)}.ch.qual-no{border-color:rgba(240,232,220,.2)}
+.qual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.qb{padding:14px 18px;background:var(--inp);border:1px solid var(--b);border-radius:12px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;text-align:center;color:var(--cr);font-size:14px}
+.qb:hover{border-color:var(--cubr)}.qb.sel{border-color:var(--cu);background:var(--cub)}
+.rgs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rg{padding:16px 18px;background:var(--inp);border:1px solid var(--b);border-radius:12px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;text-align:center}
+.rg:hover{border-color:var(--cubr)}.rg.sel{border-color:var(--cu);background:var(--cub)}
+.rv{font-family:'Instrument Serif',serif;font-size:20px;color:var(--cr);display:block}.rs2{font-size:11px;color:var(--crm);margin-top:3px}
+.mt4{margin-top:4px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt20{margin-top:20px}.mt24{margin-top:24px}.mt28{margin-top:28px}.mt32{margin-top:32px}.mt40{margin-top:40px}
+/* LANDING */
+#sl .inner{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;max-width:1060px;width:100%}
+.ll h1{margin:14px 0 18px}.ll p{font-size:16px;max-width:430px;margin-bottom:26px}
+.srow{display:flex;align-items:center;gap:10px}
+.srow p{font-size:13px;margin:0}
+.lcard{background:var(--card);border:1px solid var(--b);border-radius:18px;padding:32px}
+.lcard h3{font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;margin-bottom:6px}
+.lcard p{font-size:14px;margin-bottom:20px}
+.fstk{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.disc{font-size:12px;color:var(--crm);text-align:center}
+/* CREDIBILITY */
+#scred .inner{max-width:700px;width:100%}
+.cred-wrap{display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start}
+.cred-left{}
+.cred-avatar{width:100%;aspect-ratio:1;border-radius:16px;background:var(--el);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:14px}
+.cred-brands{display:flex;flex-direction:column;gap:6px}
+.brand-tag{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--crm);background:var(--el);border:1px solid var(--b);padding:5px 10px;border-radius:6px;text-align:center}
+.cred-right{}
+.cred-right .lbl{margin-bottom:18px}
+.cred-right h2{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;margin-bottom:16px;line-height:1.25}
+.cred-right p{font-size:14px;line-height:1.72;margin-bottom:12px}
+.cred-quote{border-left:3px solid var(--cu);padding-left:18px;margin:20px 0}
+.cred-quote p{font-style:italic;color:var(--cd);font-size:15px}
+/* STORY */
+.tk{background:var(--el);border:1px solid var(--b);border-radius:14px;padding:22px;margin:10px 0}
+.tk.hi{border-color:var(--cu)}
+.tl{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--cud);margin-bottom:10px}
+.tk.hi .tl{color:var(--cu)}.tk p{font-size:14px;line-height:1.65}
+/* SPEC */
+.sgd{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.sb{background:var(--el);border:1px solid var(--b);border-radius:14px;padding:22px}
+.sb.hi{border-color:var(--cu)}
+.slb{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--crm);margin-bottom:12px}
+.sb.hi .slb{color:var(--cu)}
+.sq{font-family:'Instrument Serif',serif;font-style:italic;font-size:14px;color:var(--crd);margin-bottom:14px;line-height:1.45}
+.sb.hi .sq{font-style:normal;color:var(--cr)}
+.sl2{list-style:none}.sl2 li{font-size:13px;color:var(--crm);padding:3px 0}.sl2 li::before{content:'· '}
+.sb.hi .sl2 li{color:var(--crd)}.sb.hi .sl2 li::before{color:var(--cu)}
+.sft{text-align:center;font-family:'Instrument Serif',serif;font-size:17px;color:var(--crd);margin-bottom:26px;line-height:1.5}
+/* MATH */
+.mgd{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.mc{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:22px}
+.mc.full{grid-column:1/-1}.mc.hi{border-color:var(--cu);background:var(--cub)}.mc.pos{border-color:rgba(100,200,130,.4);background:rgba(100,200,130,.05)}
+.mlb{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cu);margin-bottom:8px}
+.mc.pos .mlb{color:rgba(100,200,130,.8)}
+.mv{font-family:'Instrument Serif',serif;font-size:30px;color:var(--cr);line-height:1.1}
+.ms{font-size:13px;color:var(--crm);margin-top:4px}
+.mv.green{color:rgba(130,220,160,1)}
+.fr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--b)}
+.fr:last-child{border-bottom:none}
+.frl{font-size:13px;color:var(--crd);display:flex;align-items:center;gap:8px}
+.frv{font-size:14px;font-weight:500;color:var(--cr)}
+.rc{background:rgba(196,130,74,.06);border:1px solid rgba(196,130,74,.2);border-radius:14px;padding:22px;margin-top:12px}
+.rc .lbl{margin-bottom:10px}.rc p{font-size:14px;line-height:1.65;font-style:italic;color:var(--crd)}
+/* RESULT */
+#sr .inner{max-width:740px;width:100%}
+.rh{text-align:center;margin-bottom:36px}
+.rd{font-size:12px;color:var(--crm);margin-top:6px}
+.rgd{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rs{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:22px}
+.rs.full{grid-column:1/-1}.rs.feat{border-color:var(--cu);background:var(--cub);grid-column:1/-1}
+.rl{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cu);margin-bottom:10px}
+.rti{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;line-height:1.3;margin-bottom:8px}
+.rtg{font-size:14px;color:var(--crd)}
+.rmeta{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px}
+.rm div:first-child{font-size:10px;color:var(--crm);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+.rm div:last-child{font-size:14px;color:var(--cr)}
+.rlist{list-style:none}
+.rlist li{font-size:14px;color:var(--crd);padding:7px 0;border-bottom:1px solid var(--b);display:flex;align-items:flex-start;gap:10px}
+.rlist li:last-child{border-bottom:none}
+.rn{width:22px;height:22px;border-radius:50%;background:var(--el);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--cu);font-weight:500;flex-shrink:0;margin-top:1px}
+.rn.hi{background:var(--cu);color:var(--bg)}
+.pc{background:rgba(196,130,74,.05);border:1px solid rgba(196,130,74,.25);border-radius:14px;padding:24px}
+.ptl{font-family:'Instrument Serif',serif;font-size:18px;margin-bottom:8px}
+.pds{font-size:14px;color:var(--crd);line-height:1.65;margin-bottom:14px}
+.pa{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pa li{font-size:14px;color:var(--crd);display:flex;align-items:flex-start;gap:10px}
+.pa li::before{content:'→';color:var(--cu);flex-shrink:0}
+.wb{margin-bottom:16px}
+.wh{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.wtg{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--cu)}
+.wti{font-family:'Instrument Serif',serif;font-size:17px;color:var(--cr)}
+.task{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--b)}
+.task:last-child{border-bottom:none}
+.task input[type=checkbox]{width:16px;height:16px;accent-color:var(--cu);flex-shrink:0;margin-top:2px;cursor:pointer}
+.task label{font-size:14px;color:var(--crd);cursor:pointer;line-height:1.55}
+.task input:checked+label{color:var(--crm);text-decoration:line-through}
+.mb2{background:rgba(196,130,74,.08);border:1px solid rgba(196,130,74,.2);border-radius:12px;padding:20px;text-align:center;margin-top:16px}
+.mb2 p{font-family:'Instrument Serif',serif;font-size:16px;color:var(--cr);font-style:italic;line-height:1.6}
+/* DUAL CTA */
+.dual-cta{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.cta-card{border-radius:16px;padding:28px;text-align:center}
+.cta-card.primary{background:rgba(196,130,74,.1);border:1px solid rgba(196,130,74,.35)}
+.cta-card.secondary{background:var(--card);border:1px solid var(--b)}
+.cta-card h3{font-family:'Instrument Serif',serif;font-size:20px;font-weight:400;margin-bottom:8px}
+.cta-card p{font-size:13px;margin-bottom:18px;line-height:1.6}
+.cta-card .price-tag{font-family:'Instrument Serif',serif;font-size:28px;color:var(--cu);display:block;margin-bottom:4px}
+.btn-cta{display:block;width:100%;padding:16px 22px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;border:none;text-decoration:none}
+.btn-cta.p{background:var(--cr);color:var(--bg)}.btn-cta.p:hover{opacity:.9;transform:translateY(-1px)}
+.btn-cta.s{background:transparent;color:var(--cr);border:1px solid var(--bm)}.btn-cta.s:hover{border-color:var(--cubr)}
+/* GENERATING */
+#sg .inner{text-align:center;max-width:400px}
+.pulse{width:72px;height:72px;border-radius:50%;border:1.5px solid var(--cu);margin:0 auto 28px;display:flex;align-items:center;justify-content:center;animation:pr 1.8s ease-in-out infinite}
+.pulse::before{content:'';width:42px;height:42px;border-radius:50%;background:rgba(196,130,74,.18);animation:pi 1.8s ease-in-out infinite}
+@keyframes pr{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.6}}
+@keyframes pi{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+#gm{font-size:14px;color:var(--crm);margin-top:18px;min-height:22px;transition:opacity .4s}
+/* GHL badge */
+.ghl-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(196,130,74,.12);border:1px solid var(--cubr);border-radius:8px;padding:6px 12px;font-size:11px;font-weight:500;color:var(--cu);letter-spacing:.04em}
+@media(max-width:768px){
+  /* Layout */
+  #sl .inner{grid-template-columns:1fr;gap:28px}
+  .cred-wrap{grid-template-columns:1fr;gap:24px}
+  .cred-left{display:flex;gap:16px;align-items:center}
+  .cred-avatar{width:80px;height:80px;flex-shrink:0}
+  .sgd,.rgd,.mgd,.dual-cta{grid-template-columns:1fr}
+  .rs.feat,.rs.full,.mc.full{grid-column:auto}
+  .rgs{grid-template-columns:1fr 1fr}
+  nav{padding:16px 20px}
+  .card{padding:24px 18px}
+  .sc{padding:88px 16px 48px}
+
+  /* Typography — minimum readable sizes */
+  body{font-size:15px}
+  h1{font-size:clamp(28px,8vw,40px)}
+  h2{font-size:clamp(22px,6.5vw,32px)}
+  p{font-size:15px}
+
+  /* Labels — bump up from 10px to 11px */
+  .lbl,.sct,.rl,.mlb,.slb,.tl,.wtg{font-size:11px;letter-spacing:.12em}
+  .ptag{font-size:11px}
+
+  /* Choice buttons */
+  .ch{padding:16px 14px;gap:10px}
+  .ct{font-size:15px}
+  .cs{font-size:13px}
+  .cpk{font-size:10px}
+
+  /* Qualification grid */
+  .qual-grid{grid-template-columns:1fr;gap:10px}
+  .qb{padding:16px 14px;font-size:15px}
+
+  /* Revenue goal grid */
+  .rgs{grid-template-columns:1fr 1fr}
+  .rv{font-size:19px}
+  .rs2{font-size:12px}
+
+  /* Math cards */
+  .mv{font-size:26px}
+  .ms{font-size:14px}
+  .frl{font-size:14px}
+  .frv{font-size:15px}
+
+  /* Result */
+  .rti{font-size:20px}
+  .rtg{font-size:14px}
+  .rm div:last-child{font-size:14px}
+  .rlist li{font-size:14px}
+  .task label{font-size:14px}
+
+  /* Checklist section */
+  .wti{font-size:16px}
+  .wtg{font-size:11px}
+
+  /* Cred screen */
+  .cred-right p{font-size:14px}
+  .cred-quote p{font-size:14px}
+  .brand-tag{font-size:11px}
+
+  /* CTA cards */
+  .cta-card{padding:22px 18px}
+  .cta-card h3{font-size:18px}
+  .cta-card p{font-size:14px}
+  .cta-card .price-tag{font-size:24px}
+  .btn-cta{font-size:15px;padding:18px 20px}
+
+  /* GHL badge */
+  .ghl-badge{font-size:12px;padding:7px 12px}
+
+  /* Footnotes */
+  .fn{font-size:13px}
+  .disc{font-size:13px}
+  .mb2 p{font-size:15px}
+
+  /* Phase 2 inline styles override */
+  .fr .frl{font-size:14px}
+  .fr .frv{font-size:15px}
+
+  /* Download button */
+  .dl-btn{font-size:15px}
+}
+@media(max-width:400px){
+  .rgs{grid-template-columns:1fr}
+  .dual-cta{grid-template-columns:1fr}
+  .qual-grid{grid-template-columns:1fr}
+  .card{padding:20px 16px}
+  .ch{padding:14px 12px}
+}
+</style>
+</head>
+<body>
+
+<nav><span class="nb">Simple to Scale</span><span class="nt">Free Tool</span></nav>
+<div id="prog"><div id="pf"></div></div>
+
+<!-- LANDING -->
+<div class="sc on" id="sl">
+  <div class="inner">
+    <div class="ll">
+      <span class="lbl">Simple to Scale™</span>
+      <h1>Your business deserves a<br>marketing system that <em>actually works.</em></h1>
+      <p>Stop depending on referrals. Stop paying agencies that overpromise and underdeliver. This 5-minute tool diagnoses exactly what your business needs and builds you a complete marketing blueprint — free.</p>
+      <div class="srow">
+        <p style="font-size:13px;color:var(--crm)">Built for local and small business owners ready to build something real.</p>
+      </div>
+    </div>
+    <div class="lcard">
+      <h3>Get your free blueprint</h3>
+      <p>Enter your details and let's get started.</p>
+      <div class="fstk">
+        <input class="fld" id="inn" type="text" placeholder="First name" />
+        <input class="fld" id="ine" type="email" placeholder="Email address" />
+      </div>
+      <button class="btn bp" onclick="startFlow()">Build my marketing blueprint →</button>
+      <p class="disc mt12">No credit card. No sales pitch. Just a clear marketing plan for your business.</p>
+    </div>
+  </div>
+</div>
+
+<!-- JOSH CREDIBILITY -->
+<div class="sc" id="scred">
+  <div class="inner">
+    <div class="cred-wrap">
+      <div class="cred-left">
+        <div class="cred-avatar">👋</div>
+        <div class="cred-brands">
+          <div class="brand-tag">Adidas</div>
+          <div class="brand-tag">Converse</div>
+          <div class="brand-tag">Steve Madden</div>
+          <div class="brand-tag">Crocs</div>
+        </div>
+      </div>
+      <div class="cred-right">
+        <span class="lbl">Before we build your blueprint</span>
+        <h2>Hey, I'm Josh.</h2>
+        <p>I got my start managing digital marketing for brands you probably know: Adidas, Converse, Steve Madden, Crocs. Millions in ad spend on Meta that generated over 8 figures in revenue. Building the systems that move product at scale. That's where I learned what real marketing infrastructure actually looks like.</p>
+        <p>I took everything I learned from the biggest brands in the world and applied it to local businesses, because I genuinely wanted to see mom-and-pop shops win. Along the way, I also got a front-row seat to what six-figure sales days look like, working alongside the number one personal finance creator on YouTube. I've seen what happens when a real system fires on all cylinders.</p>
+        <p>And here's what I noticed across every level: brand, creator, local business. Agencies will overpromise, overcharge, and underdeliver 95% of the time. Big brands can eat that loss and hire the next agency. But a business owner trying to make their next move? Every dollar matters. You don't have margin for experiments that don't deliver.</p>
+        <div class="cred-quote">
+          <p>"That's why I built this. A blueprint that gives you everything I would tell you to do if you sat across from me and asked for my advice. Just the system, and exactly what your business needs."</p>
+        </div>
+        <p>Let's figure out exactly what your business needs.</p>
+        <button class="btn bp mt24" onclick="goTo('si')">Let's build my blueprint →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="sc" id="si">
+  <div class="psc">
+    <span class="lbl">Simple to Scale™</span>
+    <h2>Three phases.<br>One complete <em>marketing system.</em></h2>
+    <p class="mt12">Five minutes. You'll walk away with a business diagnostic, a cost-savings breakdown, and a personalized marketing blueprint built specifically for your business type and market.</p>
+    <button class="btn bp mt32" onclick="goTo('ss')">Let's go →</button>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="sc" id="ss">
+  <div class="card">
+    <h2>Two businesses. Same city. Read this.</h2>
+    <p class="mt12">Both have been open for six years. Both have good reviews. Both are great at what they do.</p>
+    <div class="tk mt20">
+      <div class="tl">Business A</div>
+      <p>Gets customers from referrals. Has a website their nephew built in 2019. Tried Google Ads once — "it didn't work." Hired an agency last year, paid $3,000/month for four months, got a report full of metrics that meant nothing, and zero new customers they could trace back to it. Still waiting for the phone to ring.</p>
+    </div>
+    <div class="tk hi mt10">
+      <div class="tl">Business B</div>
+      <p>Same market. Same reviews. Same quality of work. But they have a system. Google Ads that targets buyers, not browsers. A website that converts visitors into calls. SEO that makes them show up when someone searches their service in the area. They didn't hire a ten-person marketing department. They built a system that runs — and it brings in 40+ new leads every single month on autopilot.</p>
+    </div>
+    <div class="mt24">
+      <p style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--cr);line-height:1.5">The difference isn't budget. It isn't luck. It's having a system versus hoping for one.</p>
+      <p class="mt12">That's what we're about to build for you.</p>
+    </div>
+    <button class="btn bp mt28" onclick="goTo('sspec')">Got it — let's build →</button>
+  </div>
+</div>
+
+<!-- SPECIFICITY FRAME -->
+<div class="sc" id="sspec">
+  <div class="card">
+    <h2>This is the difference a system makes.</h2>
+    <div class="sgd">
+      <div class="sb">
+        <div class="slb">Half-baked marketing</div>
+        <div class="sq">"We need to get our name out there and get more customers somehow"</div>
+        <ul class="sl2">
+          <li>No channel strategy</li>
+          <li>No measurable goal</li>
+          <li>Relies on hope, not systems</li>
+          <li>Money spent, results unknown</li>
+          <li>Agency takes credit, you take the loss</li>
+        </ul>
+      </div>
+      <div class="sb hi">
+        <div class="slb">Dialled-in system</div>
+        <div class="sq">"30 new leads/month from Google Ads + a 6% converting landing page targeting homeowners in a 15-mile radius"</div>
+        <ul class="sl2">
+          <li>Specific channel mix</li>
+          <li>Measurable monthly target</li>
+          <li>Defined service area and buyer</li>
+          <li>Trackable ROI from day one</li>
+          <li>System runs without you</li>
+        </ul>
+      </div>
+    </div>
+    <p class="sft">That's where we're going. A real system. Let's build yours.</p>
+    <button class="btn bp" onclick="goTo('s1')">Let's do it →</button>
+  </div>
+</div>
+
+<!-- STEP 1: BUSINESS TYPE -->
+<div class="sc" id="s1">
+  <div class="card">
+    <div class="sct">Phase 1 · Step 1 of 6 — Business Diagnostic</div>
+    <h2>What kind of business do you run?</h2>
+    <p class="mt8">Pick the category that fits best.</p>
+    <div class="chs mt24" id="cbt">
+      <button class="ch" data-v="Home Services" onclick="pick('bizType',this,'b1')"><span class="cn">1</span><div><div class="ct">Home Services</div><div class="cs">Plumbing, HVAC, roofing, electrical, landscaping, cleaning</div></div></button>
+      <button class="ch" data-v="Medical & Wellness" onclick="pick('bizType',this,'b1')"><span class="cn">2</span><div><div class="ct">Medical & Wellness</div><div class="cs">Dental, chiropractic, med spa, therapy, fitness</div></div></button>
+      <button class="ch" data-v="Legal & Professional Services" onclick="pick('bizType',this,'b1')"><span class="cn">3</span><div><div class="ct">Legal & Professional Services</div><div class="cs">Law firm, accounting, consulting, financial services</div></div></button>
+      <button class="ch" data-v="Retail & E-commerce" onclick="pick('bizType',this,'b1')"><span class="cn">4</span><div><div class="ct">Retail & E-commerce</div><div class="cs">Brick-and-mortar store, online shop, boutique</div></div></button>
+      <button class="ch" data-v="Food & Hospitality" onclick="pick('bizType',this,'b1')"><span class="cn">5</span><div><div class="ct">Food & Hospitality</div><div class="cs">Restaurant, café, catering, bar, food truck</div></div></button>
+      <button class="ch" data-v="Other Service Business" onclick="pick('bizType',this,'b1')"><span class="cn">6</span><div><div class="ct">Other Service Business</div><div class="cs">Real estate, auto, events, education, or anything else</div></div></button>
+    </div>
+    <button class="btn bp mt24" id="b1" disabled onclick="step('s2',1)">Continue →</button>
+  </div>
+</div>
+
+<!-- STEP 2: BUSINESS DESCRIPTION -->
+<div class="sc" id="s2">
+  <div class="card">
+    <div class="sct">Phase 1 · Step 2 of 6 — Business Diagnostic</div>
+    <h2>Tell me about your business.</h2>
+    <p class="mt8">Describe your brand, what people love most about you, and the kind of customers you serve. Don't overthink it — just describe it like you would to someone at a dinner party.</p>
+    <textarea class="fld mt24" id="ind" rows="5" placeholder="e.g. We're a family-owned HVAC company in Dallas. Customers love that we're upfront about pricing and actually show up on time. We mostly serve homeowners in the suburbs — a lot of repeat customers who've been with us for years. Our biggest challenge right now is we rely heavily on referrals and our website hasn't generated a single lead in months..."></textarea>
+    <p class="fn mt8">The more specific you are, the more specific your blueprint will be.</p>
+    <button class="btn bp mt20" id="b2" disabled onclick="processBiz()">Continue →</button>
+  </div>
+</div>
+
+<!-- STEP 2b: AI CONFIRM -->
+<div class="sc" id="s2b">
+  <div class="card">
+    <div class="sct">Phase 1 · Step 2 of 6 — Business Diagnostic</div>
+    <h2 id="btt">Processing...</h2>
+    <p class="mt12" id="bts" style="font-size:15px;color:var(--crd)"></p>
+    <button class="btn bp mt32" onclick="confirmBiz()">That's right — keep going →</button>
+    <button class="btn bg2 mt12" onclick="goTo('s2')">Let me rephrase</button>
+  </div>
+</div>
+
+<!-- STEP 3: FOCUS AREA -->
+<div class="sc" id="s3">
+  <div class="card">
+    <div class="sct">Phase 1 · Step 3 of 6 — Business Diagnostic</div>
+    <h2>What's the biggest marketing gap?</h2>
+    <p class="mt8" id="fctx">Based on your business, where's the biggest opportunity?</p>
+    <div class="chs mt20" id="cfo"></div>
+    <p class="fn mt8" id="frec"></p>
+    <button class="btn bp mt20" id="b3" disabled onclick="step('s4',3)">Continue →</button>
+  </div>
+</div>
+
+<!-- STEP 4: PRIMARY PILLAR -->
+<div class="sc" id="s4">
+  <div class="card">
+    <div class="sct">Phase 1 · Step 4 of 6 — Business Diagnostic</div>
+    <h2>What do you need most right now?</h2>
+    <p class="mt8">Pick the one that feels most urgent. We'll build the full system, but every system needs a starting point.</p>
+    <div class="chs mt24" id="cpil">
+      <button class="ch" data-v="SEO" onclick="pick('pillar',this,'b4')"><span class="cn">1</span><div><div class="ct">SEO — Get found on Google organically</div><div class="cs">Long-term, compounding — the right foundation for every local business</div></div><span class="cpk">High ROI</span></button>
+      <button class="ch" data-v="Google Ads" onclick="pick('pillar',this,'b4')"><span class="cn">2</span><div><div class="ct">Google Ads — Show up immediately when people search</div><div class="cs">Fast results, pay per click — ideal when you need leads now</div></div></button>
+      <button class="ch" data-v="Meta Ads" onclick="pick('pillar',this,'b4')"><span class="cn">3</span><div><div class="ct">Meta Ads — Reach customers on Facebook and Instagram</div><div class="cs">Great for awareness, retargeting, and lower CPL in local markets</div></div></button>
+      <button class="ch" data-v="Website" onclick="pick('pillar',this,'b4')"><span class="cn">4</span><div><div class="ct">Website — Turn more visitors into leads and calls</div><div class="cs">Everything else depends on this converting — fix it first</div></div></button>
+      <button class="ch" data-v="Funnel" onclick="pick('pillar',this,'b4')"><span class="cn">5</span><div><div class="ct">Funnel — Drive people to a specific desired action</div><div class="cs">Book a call, schedule an appointment, or close a sale on autopilot</div></div></button>
+      <button class="ch" data-v="All of the above" onclick="pick('pillar',this,'b4')"><span class="cn">6</span><div><div class="ct">All of the above — Build the complete system</div><div class="cs">You're ready to invest in the full stack and do it right</div></div></button>
+    </div>
+    <button class="btn bp mt24" id="b4" disabled onclick="step('s5',4)">Continue →</button>
+  </div>
+</div>
+
+<!-- STEP 5: CURRENT SITUATION -->
+<div class="sc" id="s5">
+  <div class="card">
+    <div class="sct">Phase 1 · Step 5 of 6 — Business Diagnostic</div>
+    <h2>What describes your marketing right now?</h2>
+    <p class="mt8">Select everything that applies. This helps us understand exactly where you're starting from.</p>
+    <p style="font-size:12px;color:var(--crm);margin-top:12px;margin-bottom:10px">Select all that apply</p>
+    <div class="chs" id="csit">
+      <button class="ch" data-v="Living off referrals and word of mouth" onclick="toggle('situation',this)"><span class="cn">1</span><div class="ct">Living off referrals and word of mouth</div></button>
+      <button class="ch" data-v="Have a website that doesn't generate leads" onclick="toggle('situation',this)"><span class="cn">2</span><div class="ct">Have a website that doesn't generate leads</div></button>
+      <button class="ch" data-v="Tried agencies or freelancers without results" onclick="toggle('situation',this)"><span class="cn">3</span><div class="ct">Tried agencies or freelancers without results</div></button>
+      <button class="ch" data-v="Running ads but not tracking results properly" onclick="toggle('situation',this)"><span class="cn">4</span><div class="ct">Running ads but not tracking results properly</div></button>
+      <button class="ch" data-v="No consistent SEO or content strategy" onclick="toggle('situation',this)"><span class="cn">5</span><div class="ct">No consistent SEO or content strategy</div></button>
+      <button class="ch" data-v="No CRM or system to follow up with leads" onclick="toggle('situation',this)"><span class="cn">6</span><div class="ct">No CRM or follow-up system for leads</div></button>
+    </div>
+    <button class="btn bp mt24" id="b5" onclick="step('s6',5)">Continue →</button>
+  </div>
+</div>
+
+<!-- STEP 6: QUALIFICATION -->
+<div class="sc" id="s6">
+  <div class="card">
+    <div class="sct">Phase 1 · Step 6 of 6 — Business Diagnostic</div>
+    <h2>Two quick questions before we build.</h2>
+    <p class="mt8">Be honest — these help us tailor your blueprint to where you actually are.</p>
+
+    <div class="mt24">
+      <h4 style="font-size:13px;font-weight:500;color:var(--cr);margin-bottom:12px">Do you see marketing as an investment or an expense?</h4>
+      <div class="qual-grid" id="qmind">
+        <button class="qb" data-v="investment" onclick="pickQ('mindset',this)">📈 An investment<br><span style="font-size:11px;color:var(--crm)">It pays back more than it costs</span></button>
+        <button class="qb" data-v="expense" onclick="pickQ('mindset',this)">💸 An expense<br><span style="font-size:11px;color:var(--crm)">It's a cost I try to minimize</span></button>
+      </div>
+    </div>
+
+    <div class="mt20">
+      <h4 style="font-size:13px;font-weight:500;color:var(--cr);margin-bottom:12px">Are you prepared to invest $5,000 or more to kick off your marketing system?</h4>
+      <div class="qual-grid" id="qready">
+        <button class="qb" data-v="yes" onclick="pickQ('fiveK',this)">✅ Yes — I'm ready<br><span style="font-size:11px;color:var(--crm)">I understand building takes investment</span></button>
+        <button class="qb" data-v="no" onclick="pickQ('fiveK',this)">🕐 Not yet<br><span style="font-size:11px;color:var(--crm)">I want to learn first and do it myself</span></button>
+      </div>
+    </div>
+
+    <button class="btn bp mt28" id="b6" disabled onclick="goTo('sp2')">Build my blueprint →</button>
+  </div>
+</div>
+
+<!-- PHASE 2 TRANSITION -->
+<div class="sc" id="sp2">
+  <div class="psc">
+    <span class="ptag">Phase 2</span>
+    <h2>Diagnostic complete.<br>Now let's run the <em>numbers.</em></h2>
+    <p>We're going to show you exactly what it costs to hire a marketing manager in your state — and what it costs to build a system instead. No fluff. Just math.</p>
+    <button class="btn bp mt8" onclick="goTo('s7')">Show me the numbers →</button>
+  </div>
+</div>
+
+<!-- STEP 7: STATE + REVENUE -->
+<div class="sc" id="s7">
+  <div class="card" style="max-width:640px">
+    <div class="sct">Phase 2 · Cost Analysis</div>
+    <h2>Where is your business located?</h2>
+    <p class="mt8">We'll pull the average marketing manager salary for your state to show you the real cost comparison.</p>
+
+    <select class="fld mt20" id="instate" onchange="checkMathReady()">
+      <option value="">Select your state...</option>
+      <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+      <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+      <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+      <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+      <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+      <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+      <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+      <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+      <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+      <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+      <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+      <option>Vermont</option><option>Virginia</option><option>Washington</option><option>Washington DC</option>
+      <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+    </select>
+
+    <div class="mt24">
+      <h4 style="font-size:13px;font-weight:500;color:var(--cr);margin-bottom:12px">What's your approximate monthly revenue?</h4>
+      <div class="rgs" id="crev">
+        <button class="rg" data-v="7500" onclick="pickRev(this)"><span class="rv">Under $10k</span><div class="rs2">per month</div></button>
+        <button class="rg" data-v="20000" onclick="pickRev(this)"><span class="rv">$10k – $30k</span><div class="rs2">per month</div></button>
+        <button class="rg" data-v="52500" onclick="pickRev(this)"><span class="rv">$30k – $75k</span><div class="rs2">per month</div></button>
+        <button class="rg" data-v="112500" onclick="pickRev(this)"><span class="rv">$75k – $150k</span><div class="rs2">per month</div></button>
+        <button class="rg" data-v="200000" onclick="pickRev(this)"><span class="rv">$150k+</span><div class="rs2">per month</div></button>
+      </div>
+    </div>
+    <button class="btn bp mt28" id="b7" disabled onclick="showMath()">Show me what this costs →</button>
+  </div>
+</div>
+
+<!-- STEP 8: MATH RESULTS -->
+<div class="sc" id="s8">
+  <div class="card" style="max-width:700px">
+    <div class="sct">Phase 2 · Here's the Real Cost</div>
+    <h2 id="mh">Most businesses make this exact mistake.</h2>
+    <div class="mgd" id="mg"></div>
+    <div id="mr" style="display:none"></div>
+    <button class="btn bp mt28" onclick="buildBlueprint()">Build my marketing blueprint →</button>
+  </div>
+</div>
+
+<!-- GENERATING -->
+<div class="sc" id="sg">
+  <div class="inner" style="text-align:center;max-width:400px">
+    <div class="pulse"></div>
+    <h2>Building your blueprint...</h2>
+    <p class="mt16">Mapping your business, your market, and the exact system you need to compete and win.</p>
+    <div id="gm">Diagnosing your current marketing situation...</div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="sc" id="sr">
+  <div class="inner">
+    <div class="rh">
+      <span class="lbl">Your Marketing System Blueprint</span>
+      <h2 id="rh2">Here's your blueprint.</h2>
+      <div class="rd" id="rdt"></div>
+      <button class="btn dl-btn" onclick="downloadPDF()" style="max-width:280px;margin:18px auto 0;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--el);border:1px solid var(--cubr);color:var(--cu);font-size:14px;padding:14px 24px;border-radius:100px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='var(--cub)'" onmouseout="this.style.background='var(--el)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download as PDF
+      </button>
+    </div>
+    <div id="rout"></div>
+  </div>
+</div>
+
+<script>
+// ── SALARY TABLE (avg marketing manager salary by state) ──
+const SAL={
+  'Alabama':52000,'Alaska':58000,'Arizona':63000,'Arkansas':50000,
+  'California':85000,'Colorado':72000,'Connecticut':72000,'Delaware':65000,
+  'Florida':65000,'Georgia':65000,'Hawaii':65000,'Idaho':55000,
+  'Illinois':72000,'Indiana':55000,'Iowa':55000,'Kansas':55000,
+  'Kentucky':52000,'Louisiana':55000,'Maine':55000,'Maryland':72000,
+  'Massachusetts':78000,'Michigan':62000,'Minnesota':65000,'Mississippi':48000,
+  'Missouri':58000,'Montana':52000,'Nebraska':55000,'Nevada':63000,
+  'New Hampshire':65000,'New Jersey':78000,'New Mexico':55000,'New York':82000,
+  'North Carolina':62000,'North Dakota':52000,'Ohio':60000,'Oklahoma':55000,
+  'Oregon':70000,'Pennsylvania':65000,'Rhode Island':63000,'South Carolina':58000,
+  'South Dakota':52000,'Tennessee':58000,'Texas':68000,'Utah':63000,
+  'Vermont':55000,'Virginia':70000,'Washington':80000,'Washington DC':85000,
+  'West Virginia':50000,'Wisconsin':58000,'Wyoming':52000
+};
+
+// ── STATE ──
+const S={
+  name:'',email:'',bizType:'',description:'',
+  bizTitle:'',bizId:'',focusArea:'',pillar:'',
+  situation:[],mindset:'',fiveK:'',qualified:false,
+  state:'',revMid:0,aiNiche:null,bp:null
+};
+
+// ── JSON SAFETY ──
+function fixApos(t){
+  let o='';let inS=false;let esc=false;
+  for(let i=0;i<t.length;i++){
+    const c=t[i];
+    if(esc){o+=c;esc=false;continue;}
+    if(c==='\\'){o+=c;esc=true;continue;}
+    if(c==='"'){inS=!inS;o+=c;continue;}
+    if(inS&&c==="'"){o+='\u2019';continue;}
+    o+=c;
+  }return o;
+}
+function closeTrunc(s){
+  let inS=false;let esc=false;
+  for(let i=0;i<s.length;i++){const c=s[i];if(esc){esc=false;continue;}if(c==='\\'){esc=true;continue;}if(c==='"')inS=!inS;}
+  let r=s;if(inS)r+='"';
+  let arr=0;let obj=0;let inS2=false;let es=false;
+  for(let i=0;i<r.length;i++){const c=r[i];if(es){es=false;continue;}if(c==='\\'){es=true;continue;}if(c==='"'){inS2=!inS2;continue;}if(!inS2){if(c==='{')obj++;else if(c==='}')obj--;else if(c==='[')arr++;else if(c===']')arr--;}}
+  while(arr>0){r+=']';arr--;}while(obj>0){r+='}';obj--;}return r;
+}
+function safeJSON(raw){
+  let t=raw.replace(/```json|```/g,'').trim();
+  const s=t.indexOf('{');if(s!==-1)t=t.slice(s);
+  const e=t.lastIndexOf('}');if(e!==-1)t=t.slice(0,e+1);
+  try{return JSON.parse(t);}catch(x){}
+  const f=fixApos(t);
+  try{return JSON.parse(f);}catch(x){}
+  try{return JSON.parse(closeTrunc(f));}catch(x){console.error('JSON parse failed',x);throw x;}
+}
+
+// ── NAV ──
+function goTo(id){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+  const steps=['s1','s2','s2b','s3','s4','s5','s6','s7','s8'];
+  document.getElementById('prog').style.display=steps.includes(id)?'block':'none';
+}
+function step(id,n){document.getElementById('pf').style.width=(n/6*100)+'%';goTo(id);}
+
+// ── LANDING ──
+function startFlow(){
+  const n=document.getElementById('inn').value.trim(),e=document.getElementById('ine').value.trim();
+  if(!n||!e){alert('Please enter your name and email.');return;}
+  S.name=n;S.email=e;goTo('scred');
+}
+
+// ── PICKS ──
+function pick(field,btn,bid){
+  btn.closest('.chs').querySelectorAll('.ch').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');S[field]=btn.dataset.v;
+  if(bid)document.getElementById(bid).disabled=false;
+}
+function toggle(field,btn){
+  btn.classList.toggle('sel');
+  if(!Array.isArray(S[field]))S[field]=[];
+  const v=btn.dataset.v;
+  btn.classList.contains('sel')?(!S[field].includes(v)&&S[field].push(v)):(S[field]=S[field].filter(x=>x!==v));
+}
+function pickQ(field,btn){
+  btn.closest('.qual-grid').querySelectorAll('.qb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  if(field==='mindset')S.mindset=btn.dataset.v;
+  if(field==='fiveK')S.fiveK=btn.dataset.v;
+  if(S.mindset&&S.fiveK){
+    S.qualified=(S.mindset==='investment'&&S.fiveK==='yes');
+    document.getElementById('b6').disabled=false;
+  }
+}
+function pickRev(btn){
+  document.querySelectorAll('#crev .rg').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');S.revMid=parseInt(btn.dataset.v);
+  checkMathReady();
+}
+function checkMathReady(){
+  const st=document.getElementById('instate').value;
+  if(st&&S.revMid){document.getElementById('b7').disabled=false;}
+}
+
+// ── AI CALL 1: BUSINESS IDENTITY ──
+async function processBiz(){
+  const v=document.getElementById('ind').value.trim();
+  if(!v){alert('Please describe your business.');return;}
+  S.description=v;
+  const btn=document.getElementById('b2');btn.disabled=true;btn.textContent='Analyzing...';
+  try{
+    const res=await fetch("/.netlify/functions/blueprint",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type:"niche",data:{bizType:S.bizType,description:v}})});
+    const d=await res.json();
+    if(!d.text){throw new Error(d.error||'No response');}
+    const p=safeJSON(d.text);
+    S.aiNiche=p;S.bizTitle=p.title;S.bizId=p.identity;
+    document.getElementById('btt').textContent=p.title;
+    document.getElementById('bts').textContent=p.identity;
+    const fc=document.getElementById('cfo');fc.innerHTML='';
+    p.focusAreas.forEach((a,i)=>{
+      const b=document.createElement('button');b.className='ch';b.dataset.v=a.label;
+      b.onclick=function(){pickFocus(this);};
+      b.innerHTML=`<span class="cn">${i+1}</span><div><div class="ct">${a.label}${a.top?' <span class="cpk">Top Pick</span>':''}</div><div class="cs">${a.description}</div></div>`;
+      fc.appendChild(b);
+    });
+    document.getElementById('frec').textContent=p.rec;
+    step('s2b',2);
+  }catch(err){console.error(err);btn.disabled=false;btn.textContent='Continue →';alert('Something went wrong. Please try again.');}
+}
+function pickFocus(btn){
+  document.querySelectorAll('#cfo .ch').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');S.focusArea=btn.dataset.v;
+  document.getElementById('b3').disabled=false;
+}
+function confirmBiz(){S.bizId=S.aiNiche?.identity||S.description;step('s3',2);}
+
+async function buildBlueprint(){
+  goTo('sg');
+  const msgs=['Diagnosing your current marketing situation...','Building your SEO strategy...','Structuring your ads approach...','Writing your 30-day action plan...','Almost done...'];
+  let mi=0;const mel=document.getElementById('gm');
+  const iv=setInterval(()=>{mi=(mi+1)%msgs.length;mel.style.opacity='0';setTimeout(()=>{mel.textContent=msgs[mi];mel.style.opacity='1';},350);},2800);
+  try{
+    const res=await fetch("/.netlify/functions/blueprint",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type:"blueprint",data:{
+        bizType:S.bizType,bizId:S.bizId,description:S.description,
+        focusArea:S.focusArea,pillar:S.pillar,
+        situation:S.situation.join(', ')||'Not specified',
+        mindset:S.mindset,fiveK:S.fiveK,state:S.state,
+        revMid:S.revMid.toLocaleString()
+      }})});
+    clearInterval(iv);
+    const d=await res.json();
+    if(!d.text){throw new Error(d.error||'No response');}
+    const bp=safeJSON(d.text);
+    S.bp=bp;renderResult(bp);
+  }catch(err){clearInterval(iv);console.error(err);goTo('s8');alert('Something went wrong generating your blueprint. Please try again.');}
+}
+
+function renderResult(bp){
+  document.getElementById('rh2').textContent=`Here's your blueprint, ${S.name}.`;
+  document.getElementById('rdt').textContent=`Built on ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}`;
+
+  const tid=()=>Math.random().toString(36).slice(2,8);
+
+  // Dual CTA — qualified users see expert connect as primary; not-yet-ready see course as primary
+  const primaryCTA=S.qualified
+    ?`<div class="cta-card primary"><h3>Want this done for you?</h3><p>I'll connect you with an expert I personally trust to make sure your marketing needs are met — based on the exact blueprint you just received. Fill in your details and we'll take it from there.</p><a href="https://simpletoscale.com/expert" class="btn-cta p">Connect me with an expert →</a></div>
+       <div class="cta-card secondary"><h3>Want to learn how to do this yourself?</h3><p>We'll train you. Get access to the course that teaches you how to implement this entire system in-house — step by step, with AI doing the heavy lifting.</p><a href="https://simpletoscale.com/course" class="btn-cta s">Take me to the course →</a></div>`
+    :`<div class="cta-card primary"><h3>Want to learn how to do this yourself?</h3><p>We'll train you. Get access to the course that teaches you how to implement this entire system in-house — step by step, with AI doing the heavy lifting.</p><a href="https://simpletoscale.com/course" class="btn-cta p">Take me to the course →</a></div>
+       <div class="cta-card secondary"><h3>Want this done for you?</h3><p>I'll connect you with an expert I personally trust to make sure your marketing needs are met — based on the exact blueprint you just received.</p><a href="https://simpletoscale.com/expert" class="btn-cta s">Connect me with an expert →</a></div>`;
+
+  document.getElementById('rout').innerHTML=`
+  <div class="rgd">
+    <div class="rs feat">
+      <div class="rl">Your Marketing System</div>
+      <div class="rti">"${bp.systemTitle}"</div>
+      <div class="rtg">${bp.tagline}</div>
+      <div class="rmeta">
+        <div class="rm"><div>System Type</div><div>${bp.systemType}</div></div>
+        <div class="rm"><div>Business</div><div>${S.bizType}</div></div>
+        <div class="rm"><div>State</div><div>${S.state}</div></div>
+        <div class="rm"><div>Primary Focus</div><div>${S.pillar}</div></div>
+      </div>
+    </div>
+
+    <div class="rs"><div class="rl">Who You Should Be Targeting</div><p style="font-size:14px;line-height:1.65">${bp.idealCustomer}</p></div>
+    <div class="rs"><div class="rl">Start Here First</div><p style="font-size:14px;line-height:1.65">${bp.primaryFocus}</p></div>
+
+    <div class="rs full">
+      <div class="rl">Your Tech Stack <span class="ghl-badge">⚡ GoHighLevel Recommended</span></div>
+      <ul class="rlist mt12">
+        ${bp.techStack.map((t,i)=>`<li><span class="rn${i===0?' hi':''}">${i===0?'GHL':(i+1)}</span>${t}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="rs full">
+      <div class="pc">
+        <div class="rl">${bp.quickWin.title} — Do This Before Anything Else</div>
+        <div class="ptl">Get a result this week. Build later.</div>
+        <div class="pds">${bp.quickWin.description}</div>
+        <ul class="pa">${bp.quickWin.actions.map(a=>`<li>${a}</li>`).join('')}</ul>
+      </div>
+    </div>
+
+    <div class="rs full"><div class="rl">The Simplest First Step</div><p style="font-size:14px;line-height:1.65">${bp.simplest}</p></div>
+
+
+
+    <div class="rs full">
+      <div class="rl">Your 30-Day Marketing Launch Plan</div>
+      <p style="font-size:13px;color:var(--crm);margin-bottom:20px;margin-top:4px">Check tasks off as you complete them.</p>
+      ${bp.weeks.map(w=>`<div class="wb"><div class="wh"><span class="wtg">${w.tag}</span><span class="wti">${w.title}</span></div>${w.tasks.map(t=>{const id=tid();return`<div class="task"><input type="checkbox" id="t${id}"><label for="t${id}">${t}</label></div>`;}).join('')}</div>`).join('')}
+      <div class="mb2"><p>${bp.milestone}</p></div>
+    </div>
+
+    <div class="rs"><div class="rl">SEO Strategy</div><p style="font-size:14px;line-height:1.65">${bp.seoStrategy}</p></div>
+    <div class="rs"><div class="rl">Ads Strategy</div><p style="font-size:14px;line-height:1.65">${bp.adsStrategy}</p></div>
+    <div class="rs"><div class="rl">Website Quick Win</div><p style="font-size:14px;line-height:1.65">${bp.websiteTip}</p></div>
+    <div class="rs"><div class="rl">Insider Tip for ${S.bizType}</div><p style="font-size:14px;line-height:1.65">${bp.businessTip}</p></div>
+  </div>
+
+  <div class="dual-cta">${primaryCTA}</div>
+
+  <p style="font-size:12px;color:var(--crm);text-align:center;margin-top:16px">
+    Or <button onclick="restart()" style="background:none;border:none;color:var(--cu);cursor:pointer;font-family:inherit;font-size:12px;text-decoration:underline">start over for a different business</button>
+  </p>`;
+
+  goTo('sr');
+}
+
+
+function downloadPDF(){
+  if(!S.bp){alert('Please complete the blueprint first.');return;}
+  const bp=S.bp;
+  const base=SAL[S.state]||62000;
+  const mgrCost=(Math.round(base*1.30)+8400).toLocaleString();
+  const tid=()=>Math.random().toString(36).slice(2,8);
+
+  // Determine CTA order based on qualification
+  const ctaA=S.qualified
+    ?`<a href="https://simpletoscale.com/expert" style="display:block;width:100%;padding:16px;border-radius:10px;background:#172D21;color:#F0E8DC;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;text-align:center;text-decoration:none;margin-bottom:10px">Connect me with an expert &rarr;</a>
+      <a href="https://simpletoscale.com/course" style="display:block;width:100%;padding:16px;border-radius:10px;background:transparent;color:#172D21;border:2px solid #172D21;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;text-align:center;text-decoration:none">Take me to the course &rarr;</a>`
+    :`<a href="https://simpletoscale.com/course" style="display:block;width:100%;padding:16px;border-radius:10px;background:#172D21;color:#F0E8DC;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;text-align:center;text-decoration:none;margin-bottom:10px">Take me to the course &rarr;</a>
+      <a href="https://simpletoscale.com/expert" style="display:block;width:100%;padding:16px;border-radius:10px;background:transparent;color:#172D21;border:2px solid #172D21;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;text-align:center;text-decoration:none">Connect me with an expert &rarr;</a>`;
+
+  const pdfContent=`
+  <div style="font-family:'DM Sans',Helvetica,Arial,sans-serif;font-weight:300;color:#1a1a1a;background:#fff;padding:0;margin:0;max-width:720px">
+
+    <!-- HEADER -->
+    <div style="background:#172D21;padding:36px 40px;border-radius:0">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#C4824A;margin-bottom:10px">Simple to Scale&trade;</div>
+      <div style="font-family:Georgia,serif;font-size:28px;font-weight:400;color:#F0E8DC;line-height:1.2;margin-bottom:6px">${S.name}'s Marketing System Blueprint</div>
+      <div style="font-size:12px;color:rgba(240,232,220,.5)">Built on ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</div>
+    </div>
+
+    <!-- CTAs AT TOP -->
+    <div style="background:#FDF8F3;border:2px solid #C4824A;border-radius:0;padding:28px 40px;margin-bottom:0">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:12px">Ready to take action?</div>
+      <div style="font-family:Georgia,serif;font-size:18px;color:#1a1a1a;margin-bottom:16px;line-height:1.4">Your next step is one click away.</div>
+      ${ctaA}
+    </div>
+
+    <!-- DIVIDER -->
+    <div style="height:2px;background:#E8E2DA;margin:0"></div>
+
+    <!-- YOUR SYSTEM -->
+    <div style="padding:28px 40px;border-bottom:1px solid #E8E2DA">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">Your Marketing System</div>
+      <div style="font-family:Georgia,serif;font-size:22px;color:#1a1a1a;margin-bottom:6px">"${bp.systemTitle}"</div>
+      <div style="font-size:14px;color:#555;margin-bottom:14px">${bp.tagline}</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div><div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px">System</div><div style="font-size:13px;color:#1a1a1a">${bp.systemType}</div></div>
+        <div><div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px">Business</div><div style="font-size:13px;color:#1a1a1a">${S.bizType}</div></div>
+        <div><div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px">State</div><div style="font-size:13px;color:#1a1a1a">${S.state}</div></div>
+        <div><div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px">Primary Focus</div><div style="font-size:13px;color:#1a1a1a">${S.pillar}</div></div>
+      </div>
+    </div>
+
+    <!-- TWO COL: TARGET + FOCUS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #E8E2DA">
+      <div style="padding:24px 28px;border-right:1px solid #E8E2DA">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">Who You Should Target</div>
+        <div style="font-size:13px;color:#444;line-height:1.65">${bp.idealCustomer}</div>
+      </div>
+      <div style="padding:24px 28px">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">Start Here First</div>
+        <div style="font-size:13px;color:#444;line-height:1.65">${bp.primaryFocus}</div>
+      </div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div style="padding:24px 40px;border-bottom:1px solid #E8E2DA">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:12px">Your Tech Stack</div>
+      ${bp.techStack.map((t,i)=>`<div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #f0ece8"><div style="background:${i===0?'#C4824A':'#E8E2DA'};color:${i===0?'#fff':'#555'};font-size:10px;font-weight:500;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:1px">${i===0?'GHL':(i+1)}</div><div style="font-size:13px;color:#444;line-height:1.55">${t}</div></div>`).join('')}
+    </div>
+
+    <!-- 7-DAY QUICK WIN -->
+    <div style="padding:24px 40px;background:#FDF8F3;border-bottom:1px solid #E8E2DA">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">${bp.quickWin.title} — Do This First</div>
+      <div style="font-size:14px;color:#333;margin-bottom:12px">${bp.quickWin.description}</div>
+      ${bp.quickWin.actions.map(a=>`<div style="display:flex;gap:10px;margin-bottom:8px"><span style="color:#C4824A;flex-shrink:0">&rarr;</span><span style="font-size:13px;color:#555">${a}</span></div>`).join('')}
+    </div>
+
+    <!-- SIMPLEST -->
+    <div style="padding:20px 40px;border-bottom:1px solid #E8E2DA">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">The Simplest First Step</div>
+      <div style="font-size:13px;color:#444;line-height:1.65">${bp.simplest}</div>
+    </div>
+
+    <!-- 30-DAY PLAN -->
+    <div style="padding:24px 40px;border-bottom:1px solid #E8E2DA">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:16px">Your 30-Day Marketing Launch Plan</div>
+      ${bp.weeks.map(w=>`
+        <div style="margin-bottom:16px">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px">
+            <span style="font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#C4824A">${w.tag}</span>
+            <span style="font-family:Georgia,serif;font-size:16px;color:#1a1a1a">${w.title}</span>
+          </div>
+          ${w.tasks.map(t=>`<div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f0ece8;align-items:flex-start"><span style="width:14px;height:14px;border:1.5px solid #C4824A;border-radius:3px;flex-shrink:0;margin-top:2px;display:inline-block"></span><span style="font-size:13px;color:#555;line-height:1.5">${t}</span></div>`).join('')}
+        </div>
+      `).join('')}
+      <div style="background:#FDF8F3;border:1px solid rgba(196,130,74,.3);border-radius:8px;padding:16px;margin-top:12px;text-align:center">
+        <div style="font-family:Georgia,serif;font-size:15px;color:#1a1a1a;font-style:italic;line-height:1.55">${bp.milestone}</div>
+      </div>
+    </div>
+
+    <!-- STRATEGY GRID -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #E8E2DA">
+      <div style="padding:20px 28px;border-right:1px solid #E8E2DA">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">SEO Strategy</div>
+        <div style="font-size:13px;color:#444;line-height:1.65">${bp.seoStrategy}</div>
+      </div>
+      <div style="padding:20px 28px">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">Ads Strategy</div>
+        <div style="font-size:13px;color:#444;line-height:1.65">${bp.adsStrategy}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #E8E2DA">
+      <div style="padding:20px 28px;border-right:1px solid #E8E2DA">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">Website Quick Win</div>
+        <div style="font-size:13px;color:#444;line-height:1.65">${bp.websiteTip}</div>
+      </div>
+      <div style="padding:20px 28px">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">Insider Tip</div>
+        <div style="font-size:13px;color:#444;line-height:1.65">${bp.businessTip}</div>
+      </div>
+    </div>
+
+    <!-- CTA REPEAT AT BOTTOM -->
+    <div style="background:#172D21;padding:28px 40px;text-align:center">
+      <div style="font-family:Georgia,serif;font-size:18px;color:#F0E8DC;margin-bottom:6px;line-height:1.4">The blueprint is yours. What happens next is up to you.</div>
+      <div style="font-size:13px;color:rgba(240,232,220,.6);margin-bottom:18px">Simple to Scale &mdash; simpletoscale.com</div>
+      ${ctaA}
+    </div>
+
+  </div>`;
+
+  const container=document.createElement('div');
+  container.innerHTML=pdfContent;
+  container.style.position='fixed';
+  container.style.left='-9999px';
+  container.style.top='0';
+  container.style.width='720px';
+  document.body.appendChild(container);
+
+  const opt={
+    margin:[0,0,0,0],
+    filename:`Simple-to-Scale-Blueprint-${S.name.replace(/\s+/g,'-')}.pdf`,
+    image:{type:'jpeg',quality:0.95},
+    html2canvas:{scale:2,useCORS:true,logging:false},
+    jsPDF:{unit:'px',format:[720,1100],orientation:'portrait',hotfixes:['px_scaling']}
+  };
+
+  // Show loading state on button
+  const dlBtn=document.querySelector('.dl-btn');
+  const origText=dlBtn?dlBtn.innerHTML:'';
+  if(dlBtn){dlBtn.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M4 10l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Generating...';dlBtn.disabled=true;}
+
+  html2pdf().set(opt).from(container).save().then(()=>{
+    document.body.removeChild(container);
+    if(dlBtn){dlBtn.innerHTML=origText;dlBtn.disabled=false;}
+  }).catch(err=>{
+    console.error(err);
+    document.body.removeChild(container);
+    if(dlBtn){dlBtn.innerHTML=origText;dlBtn.disabled=false;}
+    alert('PDF generation failed. Please try again.');
+  });
+}
+
+function restart(){
+  Object.assign(S,{name:'',email:'',bizType:'',description:'',bizTitle:'',bizId:'',focusArea:'',pillar:'',situation:[],mindset:'',fiveK:'',qualified:false,state:'',revMid:0,aiNiche:null,bp:null});
+  goTo('sl');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('inn').addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('ine').focus();});
+  document.getElementById('ine').addEventListener('keypress',e=>{if(e.key==='Enter')startFlow();});
+  document.getElementById('ind').addEventListener('input',e=>{document.getElementById('b2').disabled=e.target.value.trim().length<10;});
+});
+</script>
+</body>
+</html>
 
