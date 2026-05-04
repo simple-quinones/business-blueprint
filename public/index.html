@@ -715,6 +715,63 @@ function pickFocus(btn){
 }
 function confirmBiz(){S.bizId=S.aiNiche?.identity||S.description;step('s3',2);}
 
+function showMath(){
+  const st=document.getElementById('instate').value;
+  if(!st){alert('Please select your state.');return;}
+  S.state=st;
+  const base=SAL[st]||62000;
+  const loaded=Math.round(base*1.30);
+  const overhead=8400;
+  const totalMgr=loaded+overhead;
+  const annualRev=S.revMid*12;
+
+  document.getElementById('mh').textContent=`Most businesses make this exact mistake.`;
+
+  document.getElementById('mg').innerHTML=`
+    <div class="mc full" style="background:var(--el);border-color:var(--bm)">
+      <p style="font-size:15px;color:var(--crd);line-height:1.7;margin-bottom:0">Most businesses don’t build full marketing teams. They hire <strong style="color:var(--cr)">one marketing manager</strong> and hope for the best. In ${st}, that looks like this:</p>
+    </div>
+    <div class="mc hi"><div class="mlb">Marketing Manager Base Salary</div><div class="mv">$${base.toLocaleString()}</div><div class="ms">avg. annual in ${st}</div></div>
+    <div class="mc hi"><div class="mlb">True W-2 Cost to You</div><div class="mv">$${totalMgr.toLocaleString()}</div><div class="ms">salary + benefits + taxes + overhead</div></div>
+    <div class="mc full" style="border:none;padding:0;background:transparent;display:flex;flex-direction:column;gap:12px">
+      <div style="background:var(--card);border:1px solid var(--b);border-radius:14px;padding:22px">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,100,100,.7);margin-bottom:10px">⚠ The Reality of That Hire</div>
+        <p style="font-size:14px;color:var(--crd);line-height:1.7;margin:0">That marketing manager is usually a recent college grad who needed a job. They can schedule social posts, run a $10/day Facebook campaign, make a flyer in Canva, and maybe set up a Google Ads account. They’re not bad people, they’re just not specialists. They’d be better off learning inside an agency. But in your business, where you need real outcomes, you’re paying full-time salary for part-time results.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--b);border-radius:14px;padding:22px">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--cu);margin-bottom:14px">Three Problems With This Approach</div>
+        <div style="display:flex;gap:14px;margin-bottom:14px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:rgba(196,130,74,.15);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--cu);flex-shrink:0">1</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;color:var(--cr);margin-bottom:4px">You’re wasting money.</div>
+            <p style="font-size:13px;color:var(--crd);line-height:1.65;margin:0">A generalist marketing manager cannot replace a media buyer, an SEO specialist, a funnel architect, and a web developer. You’re paying $${totalMgr.toLocaleString()}/year for a fraction of what a real system delivers.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;margin-bottom:14px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:rgba(196,130,74,.15);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--cu);flex-shrink:0">2</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;color:var(--cr);margin-bottom:4px">You’re leaving money on the table.</div>
+            <p style="font-size:13px;color:var(--crd);line-height:1.65;margin:0">A front-to-back marketing system generates a minimum 20% revenue improvement for most local businesses. That improvement compounds every month. A system that pays for itself and keeps paying is not an expense. It is the most important investment you will make in your business this year.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:rgba(196,130,74,.15);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--cu);flex-shrink:0">3</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;color:var(--cr);margin-bottom:4px">You’re managing a dead end.</div>
+            <p style="font-size:13px;color:var(--crd);line-height:1.65;margin:0">You became a business owner to do what you’re great at, not to manage someone else’s learning curve. Either build a real system, or learn to run one yourself. Both paths beat where you are right now.</p>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(196,130,74,.07);border:1px solid rgba(196,130,74,.25);border-radius:14px;padding:22px;text-align:center">
+        <p style="font-family:'Instrument Serif',serif;font-size:19px;color:var(--cr);line-height:1.55;margin:0">You can scale your business. The path isn’t as far off as it feels. Click the button below and we’ll show you exactly how to get started.</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('mr').style.display='none';
+  document.getElementById('pf').style.width='100%';
+  goTo('s8');
+}
+
 async function buildBlueprint(){
   goTo('sg');
   const msgs=['Diagnosing your current marketing situation...','Building your SEO strategy...','Structuring your ads approach...','Writing your 30-day action plan...','Almost done...'];
@@ -981,4 +1038,3 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
-
