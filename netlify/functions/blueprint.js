@@ -129,7 +129,8 @@ HARD RULES: Every tasks string MAX 18 words. Every quickWin action MAX 25 words.
   }
 
   try {
-    const result = await callAnthropic(apiKey, prompt, maxTokens, "claude-sonnet-4-6");
+    const model = type === "blueprint" ? "claude-haiku-4-5-20251001" : "claude-sonnet-4-6";
+    const result = await callAnthropic(apiKey, prompt, maxTokens, model);
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
