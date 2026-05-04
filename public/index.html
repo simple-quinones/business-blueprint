@@ -689,7 +689,7 @@ async function processBiz(){
   S.description=v;
   const btn=document.getElementById('b2');btn.disabled=true;btn.textContent='Analyzing...';
   try{
-    const res=await fetch("/api/blueprint",{method:"POST",headers:{"Content-Type":"application/json"},
+    const res=await fetch("/.netlify/functions/blueprint",{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({type:"niche",data:{bizType:S.bizType,description:v}})});
     const d=await res.json();
     if(!d.text){throw new Error(d.error||'No response');}
@@ -721,7 +721,7 @@ async function buildBlueprint(){
   let mi=0;const mel=document.getElementById('gm');
   const iv=setInterval(()=>{mi=(mi+1)%msgs.length;mel.style.opacity='0';setTimeout(()=>{mel.textContent=msgs[mi];mel.style.opacity='1';},350);},2800);
   try{
-    const res=await fetch("/api/blueprint",{method:"POST",headers:{"Content-Type":"application/json"},
+    const res=await fetch("/.netlify/functions/blueprint",{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({type:"blueprint",data:{
         bizType:S.bizType,bizId:S.bizId,description:S.description,
         focusArea:S.focusArea,pillar:S.pillar,
