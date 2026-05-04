@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marketing Blueprint — Simple to Scale</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root{--bg:#172D21;--card:#1C3628;--el:#213E2F;--inp:#1A3326;--cu:#C4824A;--cud:rgba(196,130,74,.6);--cub:rgba(196,130,74,.07);--cubr:rgba(196,130,74,.4);--cr:#F0E8DC;--crd:rgba(240,232,220,.62);--crm:rgba(240,232,220,.32);--b:rgba(240,232,220,.09);--bm:rgba(240,232,220,.16)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -568,10 +567,7 @@ select.fld option{background:var(--bg);color:var(--cr)}
       <span class="lbl">Your Marketing System Blueprint</span>
       <h2 id="rh2">Here's your blueprint.</h2>
       <div class="rd" id="rdt"></div>
-      <button class="btn dl-btn" onclick="downloadPDF()" style="max-width:280px;margin:18px auto 0;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--el);border:1px solid var(--cubr);color:var(--cu);font-size:14px;padding:14px 24px;border-radius:100px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='var(--cub)'" onmouseout="this.style.background='var(--el)'">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Download as PDF
-      </button>
+
     </div>
     <div id="rout"></div>
   </div>
@@ -866,142 +862,6 @@ function renderResult(bp){
   goTo('sr');
 }
 
-
-function downloadPDF(){
-  if(!S.bp){alert('Please complete the blueprint first.');return;}
-  if(typeof html2pdf==='undefined'){alert('PDF library still loading. Please wait a moment and try again.');return;}
-  const bp=S.bp;
-
-  const ctaA=S.qualified
-    ?`<a href="https://simpletoscale.com/expert" style="display:block;width:100%;padding:14px;background:#172D21;color:#F0E8DC;font-size:14px;font-weight:500;text-align:center;text-decoration:none;margin-bottom:8px;box-sizing:border-box">Connect me with an expert &rarr;</a><a href="https://simpletoscale.com/course" style="display:block;width:100%;padding:14px;background:#ffffff;color:#172D21;border:2px solid #172D21;font-size:14px;font-weight:500;text-align:center;text-decoration:none;box-sizing:border-box">Take me to the course &rarr;</a>`
-    :`<a href="https://simpletoscale.com/course" style="display:block;width:100%;padding:14px;background:#172D21;color:#F0E8DC;font-size:14px;font-weight:500;text-align:center;text-decoration:none;margin-bottom:8px;box-sizing:border-box">Take me to the course &rarr;</a><a href="https://simpletoscale.com/expert" style="display:block;width:100%;padding:14px;background:#ffffff;color:#172D21;border:2px solid #172D21;font-size:14px;font-weight:500;text-align:center;text-decoration:none;box-sizing:border-box">Connect me with an expert &rarr;</a>`;
-
-  const techRows=bp.techStack.map((t,i)=>`<tr><td style="padding:8px 0;border-bottom:1px solid #f0ece8;vertical-align:top;width:60px"><span style="display:inline-block;background:${i===0?'#C4824A':'#E8E2DA'};color:${i===0?'#ffffff':'#555555'};font-size:10px;font-weight:bold;padding:3px 8px;border-radius:4px">${i===0?'GHL':(i+1)}</span></td><td style="padding:8px 0 8px 8px;border-bottom:1px solid #f0ece8;font-size:13px;color:#444444;line-height:1.55">${t}</td></tr>`).join('');
-
-  const quickWinRows=bp.quickWin.actions.map(a=>`<tr><td style="padding:6px 0;vertical-align:top;width:20px;color:#C4824A;font-size:13px">&rarr;</td><td style="padding:6px 0;font-size:13px;color:#555555">${a}</td></tr>`).join('');
-
-  const weeksHTML=bp.weeks.map(w=>`<div style="margin-bottom:16px"><div style="margin-bottom:10px"><span style="font-size:9px;font-weight:bold;letter-spacing:.12em;text-transform:uppercase;color:#C4824A">${w.tag}</span> <span style="font-family:Georgia,serif;font-size:16px;color:#1a1a1a;margin-left:6px">${w.title}</span></div>${w.tasks.map(t=>`<table style="width:100%;border-collapse:collapse"><tr><td style="padding:6px 0;border-bottom:1px solid #f0ece8;vertical-align:top;width:24px"><span style="display:inline-block;width:12px;height:12px;border:1.5px solid #C4824A;border-radius:2px;margin-top:2px"></span></td><td style="padding:6px 0;border-bottom:1px solid #f0ece8;font-size:13px;color:#555555;line-height:1.5">${t}</td></tr></table>`).join('')}</div>`).join('');
-
-  const pdfContent=`<div style="font-family:Helvetica,Arial,sans-serif;color:#1a1a1a;background:#ffffff;width:680px;padding:0;margin:0">
-
-    <div style="background:#172D21;padding:32px 36px">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:#C4824A;margin-bottom:10px">Simple to Scale</div>
-      <div style="font-family:Georgia,serif;font-size:26px;color:#F0E8DC;line-height:1.2;margin-bottom:6px">${S.name}'s Marketing Blueprint</div>
-      <div style="font-size:12px;color:#A8A096">Built on ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</div>
-    </div>
-
-    <div style="background:#FDF8F3;border-top:2px solid #C4824A;border-bottom:2px solid #C4824A;padding:24px 36px">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:10px">Ready to take action?</div>
-      <div style="font-family:Georgia,serif;font-size:18px;color:#1a1a1a;margin-bottom:14px;line-height:1.4">Your next step is one click away.</div>
-      ${ctaA}
-    </div>
-
-    <div style="padding:24px 36px;border-bottom:1px solid #E8E2DA">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">Your Marketing System</div>
-      <div style="font-family:Georgia,serif;font-size:22px;color:#1a1a1a;margin-bottom:6px">"${bp.systemTitle}"</div>
-      <div style="font-size:14px;color:#555555;margin-bottom:14px;line-height:1.55">${bp.tagline}</div>
-      <table style="width:100%;border-collapse:collapse"><tr>
-        <td style="font-size:10px;color:#999999;text-transform:uppercase;letter-spacing:.1em;padding-right:14px">System</td>
-        <td style="font-size:13px;color:#1a1a1a;padding-right:14px">${bp.systemType}</td>
-      </tr><tr>
-        <td style="font-size:10px;color:#999999;text-transform:uppercase;letter-spacing:.1em;padding-right:14px;padding-top:6px">Business</td>
-        <td style="font-size:13px;color:#1a1a1a;padding-right:14px;padding-top:6px">${S.bizType}</td>
-      </tr><tr>
-        <td style="font-size:10px;color:#999999;text-transform:uppercase;letter-spacing:.1em;padding-right:14px;padding-top:6px">State</td>
-        <td style="font-size:13px;color:#1a1a1a;padding-right:14px;padding-top:6px">${S.state}</td>
-      </tr><tr>
-        <td style="font-size:10px;color:#999999;text-transform:uppercase;letter-spacing:.1em;padding-right:14px;padding-top:6px">Primary Focus</td>
-        <td style="font-size:13px;color:#1a1a1a;padding-right:14px;padding-top:6px">${S.pillar}</td>
-      </tr></table>
-    </div>
-
-    <div style="padding:24px 36px;border-bottom:1px solid #E8E2DA">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">Who You Should Target</div>
-      <div style="font-size:13px;color:#444444;line-height:1.65;margin-bottom:18px">${bp.idealCustomer}</div>
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">Start Here First</div>
-      <div style="font-size:13px;color:#444444;line-height:1.65">${bp.primaryFocus}</div>
-    </div>
-
-    <div style="padding:24px 36px;border-bottom:1px solid #E8E2DA">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:12px">Your Tech Stack</div>
-      <table style="width:100%;border-collapse:collapse">${techRows}</table>
-    </div>
-
-    <div style="padding:24px 36px;background:#FDF8F3;border-bottom:1px solid #E8E2DA">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:8px">${bp.quickWin.title} - Do This First</div>
-      <div style="font-size:14px;color:#333333;margin-bottom:12px;line-height:1.55">${bp.quickWin.description}</div>
-      <table style="width:100%;border-collapse:collapse">${quickWinRows}</table>
-    </div>
-
-    <div style="padding:20px 36px;border-bottom:1px solid #E8E2DA">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">The Simplest First Step</div>
-      <div style="font-size:13px;color:#444444;line-height:1.65">${bp.simplest}</div>
-    </div>
-
-    <div style="padding:24px 36px;border-bottom:1px solid #E8E2DA">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:14px">Your 30-Day Marketing Launch Plan</div>
-      ${weeksHTML}
-      <div style="background:#FDF8F3;border:1px solid #E0CDB6;padding:14px;margin-top:10px;text-align:center">
-        <div style="font-family:Georgia,serif;font-size:15px;color:#1a1a1a;font-style:italic;line-height:1.55">${bp.milestone}</div>
-      </div>
-    </div>
-
-    <div style="padding:20px 36px;border-bottom:1px solid #E8E2DA">
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">SEO Strategy</div>
-      <div style="font-size:13px;color:#444444;line-height:1.65;margin-bottom:18px">${bp.seoStrategy}</div>
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">Ads Strategy</div>
-      <div style="font-size:13px;color:#444444;line-height:1.65;margin-bottom:18px">${bp.adsStrategy}</div>
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">Website Quick Win</div>
-      <div style="font-size:13px;color:#444444;line-height:1.65;margin-bottom:18px">${bp.websiteTip}</div>
-      <div style="font-size:10px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:#C4824A;margin-bottom:6px">Insider Tip for ${S.bizType}</div>
-      <div style="font-size:13px;color:#444444;line-height:1.65">${bp.businessTip}</div>
-    </div>
-
-    <div style="background:#172D21;padding:28px 36px;text-align:center">
-      <div style="font-family:Georgia,serif;font-size:17px;color:#F0E8DC;margin-bottom:6px;line-height:1.4">The blueprint is yours. What happens next is up to you.</div>
-      <div style="font-size:12px;color:#A8A096;margin-bottom:18px">Simple to Scale</div>
-      ${ctaA}
-    </div>
-
-  </div>`;
-
-  // Render in visible offscreen container (right side, off the right edge but on-screen for canvas)
-  const container=document.createElement('div');
-  container.innerHTML=pdfContent;
-  container.style.position='absolute';
-  container.style.left='0';
-  container.style.top='0';
-  container.style.width='680px';
-  container.style.zIndex='-1';
-  container.style.opacity='0';
-  container.style.pointerEvents='none';
-  document.body.appendChild(container);
-
-  const dlBtn=document.querySelector('.dl-btn');
-  const origText=dlBtn?dlBtn.innerHTML:'';
-  if(dlBtn){dlBtn.innerHTML='Generating...';dlBtn.disabled=true;}
-
-  const opt={
-    margin:0.3,
-    filename:`Simple-to-Scale-Blueprint-${S.name.replace(/\s+/g,'-')}.pdf`,
-    image:{type:'jpeg',quality:0.95},
-    html2canvas:{scale:2,useCORS:true,logging:false,backgroundColor:'#ffffff',windowWidth:680},
-    jsPDF:{unit:'in',format:'letter',orientation:'portrait'},
-    pagebreak:{mode:['avoid-all','css','legacy']}
-  };
-
-  setTimeout(()=>{
-    html2pdf().set(opt).from(container).save().then(()=>{
-      document.body.removeChild(container);
-      if(dlBtn){dlBtn.innerHTML=origText;dlBtn.disabled=false;}
-    }).catch(err=>{
-      console.error('PDF error:',err);
-      document.body.removeChild(container);
-      if(dlBtn){dlBtn.innerHTML=origText;dlBtn.disabled=false;}
-      alert('PDF generation failed. Please try again.');
-    });
-  },200);
-}
 
 function restart(){
   Object.assign(S,{name:'',email:'',bizType:'',description:'',bizTitle:'',bizId:'',focusArea:'',pillar:'',situation:[],mindset:'',fiveK:'',qualified:false,state:'',revMid:0,aiNiche:null,bp:null});
