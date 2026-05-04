@@ -1,4 +1,42 @@
-const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
+const https = require("https");
+
+function callAnthropic(apiKey, prompt, maxTokens) {
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      model: "claude-3-5-sonnet-20241022",
+      max_tokens: maxTokens,
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    const options = {
+      hostname: "api.anthropic.com",
+      path: "/v1/messages",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(body),
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      let data = "";
+      res.on("data", (chunk) => { data += chunk; });
+      res.on("end", () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(JSON.parse(data));
+        } else {
+          reject(new Error(`Anthropic error ${res.statusCode}: ${data}`));
+        }
+      });
+    });
+
+    req.on("error", reject);
+    req.write(body);
+    req.end();
+  });
+}
 
 exports.handler = async function (event) {
   if (event.httpMethod !== "POST") {
@@ -7,10 +45,7 @@ exports.handler = async function (event) {
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "ANTHROPIC_API_KEY environment variable is not set." }),
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: "ANTHROPIC_API_KEY not set" }) };
   }
 
   let payload;
@@ -37,18 +72,18 @@ Return ONLY valid JSON (no markdown, no backticks):
   "title":"3-5 word business type descriptor (e.g. Family-Owned HVAC Company)",
   "identity":"You serve [specific customer type] who need [specific service/outcome] in [their market]. (1 sentence starting with You serve)",
   "focusAreas":[
-    {"label":"3-6 words naming a specific marketing struggle","description":"One sentence: what this problem costs them AND what fixing it could produce. Example format: 'No Google rankings means competitors take your leads — ranking for 5 local keywords could add 20+ inbound calls per month.'","top":true},
-    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":true},
-    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":true},
-    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false},
-    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false},
-    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false},
-    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain + concrete outcome if fixed","top":false}
+    {"label":"3-6 words naming a specific marketing struggle","description":"One sentence: what this problem costs them AND what fixing it could produce. Example: No Google rankings means competitors take your leads and ranking for 5 local keywords could add 20 inbound calls per month.","top":true},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain plus concrete outcome if fixed","top":true},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain plus concrete outcome if fixed","top":true},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain plus concrete outcome if fixed","top":false},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain plus concrete outcome if fixed","top":false},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain plus concrete outcome if fixed","top":false},
+    {"label":"3-6 words naming a specific marketing struggle","description":"Same format: specific pain plus concrete outcome if fixed","top":false}
   ],
   "rec":"1 sentence: which 1-2 focus areas would move the needle fastest for this specific business and why"
 }
 
-CRITICAL: Focus area labels must be REAL specific marketing struggles, not vague categories. Bad examples: 'Local SEO Presence', 'Social Media Strategy'. Good examples: 'No Google Rankings Losing Leads', 'Website Visitors Not Converting', 'Zero Follow-Up After First Contact'. Every description must name the pain AND the potential outcome if fixed.`;
+CRITICAL: Focus area labels must name real specific marketing struggles. Bad: Local SEO Presence. Good: No Google Rankings Losing Leads. Every description must name the pain AND the potential outcome if fixed.`;
     maxTokens = 1200;
 
   } else if (type === "blueprint") {
@@ -61,7 +96,7 @@ Business identity: ${bizId}
 Business description: ${description}
 Biggest marketing gap: ${focusArea}
 Primary pillar needed: ${pillar}
-Current situation: ${situation || 'Not specified'}
+Current situation: ${situation || "Not specified"}
 Marketing mindset: ${mindset}
 Investment readiness: ${fiveK}
 State: ${state}
@@ -99,7 +134,7 @@ Return ONLY valid JSON (no markdown, no backticks):
 CRITICAL RULES:
 - Every tasks string: MAXIMUM 20 words. Action verb plus what plus how. No paragraphs.
 - Every quickWin actions string: MAXIMUM 25 words.
-- simplest, tagline, primaryFocus, milestone, seoStrategy, adsStrategy, websiteTip, businessTip: short and specific, one sentence each.
+- simplest, tagline, primaryFocus, milestone, seoStrategy, adsStrategy, websiteTip, businessTip: one sentence each.
 - Violating word limits causes a JSON parse error in the app.`;
     maxTokens = 4096;
 
@@ -108,37 +143,14 @@ CRITICAL RULES:
   }
 
   try {
-    const response = await fetch(ANTHROPIC_API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-3-5-sonnet-20241022",
-        max_tokens: maxTokens,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error("Anthropic API error:", response.status, errText);
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ error: `Anthropic API error: ${response.status}` }),
-      };
-    }
-
-    const result = await response.json();
+    const result = await callAnthropic(apiKey, prompt, maxTokens);
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: result.content[0].text }),
     };
   } catch (err) {
-    console.error("Function error:", err);
+    console.error("Function error:", err.message);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Internal server error", detail: err.message }),
